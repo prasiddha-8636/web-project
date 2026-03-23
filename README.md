@@ -55,18 +55,27 @@ npm install
 npm run dev
 ```
 
-## Environment Variables
+## Environment Configuration
 
-### Frontend
-The frontend requires the backend API URL to be configured. Create a `.env` file in the `frontend/` directory:
-- **Local**: `VITE_API_URL=http://localhost:8000` (or leave empty to use the Vite proxy)
-- **Production (Vercel)**: Add `VITE_API_URL` to your Vercel Project Settings > Environment Variables with the value `https://web-project-production-1d14.up.railway.app`.
+To get the project running, you must configure the environment variables for both the frontend and backend. 
 
-### Backend
-Ensure the following are set in your production environment (Railway):
-- `DATABASE_URL`: Connection string for your production database.
-- `CORS_ALLOWED_ORIGINS`: Should include your Vercel frontend URL.
-- `SECRET_KEY`: A secure random string.
+### Frontend Setup
+1. Navigate to the `frontend/` directory.
+2. Create a `.env` file from the provided example:
+   ```bash
+   cp .env.example .env
+   ```
+3. Open `.env` and set `VITE_API_URL`:
+   - **Local Development**: Set to `http://localhost:8000`.
+   - **Production (Vercel)**: Set to your Railway backend URL (e.g., `https://web-project-production-1d14.up.railway.app`).
+
+### Backend Setup
+The backend uses environment variables for secure production configuration. Ensure the following are set in your environment (or a `.env` file in the `backend/` directory):
+- `DATABASE_URL`: Connection string for your database (PostgreSQL recommended for production).
+- `CORS_ALLOWED_ORIGINS`: Comma-separated list of allowed origins (e.g., `https://web-project-xi-rose.vercel.app`).
+- `CSRF_TRUSTED_ORIGINS`: Same as above, required for mutation security.
+- `SECRET_KEY`: A secure random string for Django's security.
+- `DEBUG`: Set to `False` in production.
 
 ## Key Endpoints
 - `/api/auth/register/` - User registration
