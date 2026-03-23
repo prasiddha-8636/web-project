@@ -11,6 +11,14 @@ The backend implements a multi-tier database schema designed for data integrity 
 - **Comments**: Threaded feedback loop linked to tasks and users.
 - **Normalization**: Enforced through primary/foreign key constraints with `CASCADE` and `SET_NULL` logic to prevent orphaned records.
 
+### Database Schema
+
+| Table | Fields | Relations / Constraints |
+| :--- | :--- | :--- |
+| **Project** | `id`, `name`, `description`, `status`, `created_at`, `updated_at` | `owner` (FK → User, CASCADE) |
+| **Task** | `id`, `title`, `description`, `priority`, `status`, `due_date`, `created_at`, `updated_at` | `project` (FK → Project, CASCADE), `assigned_to` (FK → User, SET_NULL) |
+| **Comment** | `id`, `body`, `created_at` | `task` (FK → Task, CASCADE), `author` (FK → User, CASCADE) |
+
 ### REST API & Security
 The API is built on Django REST Framework, prioritizing security and clear contract definition:
 - **Stateless Auth**: Implements JWT (JSON Web Tokens) with a secure rotation strategy to manage user sessions without server-side state.
