@@ -69,14 +69,6 @@ To get the project running, you must configure the environment variables for bot
    - **Local Development**: Set to `http://localhost:8000`.
    - **Production (Vercel)**: Set to your Railway backend URL (e.g., `https://web-project-production-1d14.up.railway.app`).
 
-### Backend Setup
-The backend uses environment variables for secure production configuration. Ensure the following are set in your environment (or a `.env` file in the `backend/` directory):
-- `DATABASE_URL`: Connection string for your database (PostgreSQL recommended for production).
-- `CORS_ALLOWED_ORIGINS`: Comma-separated list of allowed origins (e.g., `https://web-project-xi-rose.vercel.app`).
-- `CSRF_TRUSTED_ORIGINS`: Same as above, required for mutation security.
-- `SECRET_KEY`: A secure random string for Django's security.
-- `DEBUG`: Set to `False` in production.
-
 ## Key Endpoints
 - `/api/auth/register/` - User registration
 - `/api/auth/login/` - JWT token acquisition
