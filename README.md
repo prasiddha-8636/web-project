@@ -55,6 +55,19 @@ npm install
 npm run dev
 ```
 
+## Environment Variables
+
+### Frontend
+The frontend requires the backend API URL to be configured. Create a `.env` file in the `frontend/` directory:
+- **Local**: `VITE_API_URL=http://localhost:8000` (or leave empty to use the Vite proxy)
+- **Production (Vercel)**: Add `VITE_API_URL` to your Vercel Project Settings > Environment Variables with the value `https://web-project-production-1d14.up.railway.app`.
+
+### Backend
+Ensure the following are set in your production environment (Railway):
+- `DATABASE_URL`: Connection string for your production database.
+- `CORS_ALLOWED_ORIGINS`: Should include your Vercel frontend URL.
+- `SECRET_KEY`: A secure random string.
+
 ## Key Endpoints
 - `/api/auth/register/` - User registration
 - `/api/auth/login/` - JWT token acquisition
