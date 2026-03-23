@@ -1,46 +1,53 @@
-# DevTrack
+# DevTrack | Professional Task Management
 
-DevTrack is a high-end, minimalist project and task management system built with Django and React. It features a modern dark-themed UI, secure JWT authentication, and full CRUD operations for Projects, Tasks, and Comments.
+A focused, high-performance project tracking system built with a decoupled Django/React architecture. DevTrack moves beyond basic "todo" apps by implementing a fully normalized relational structure and a premium, responsive interface tailored for developer workflows.
 
-## Features
+## Technical Architecture
 
-- **Project Management**: Create, view, and organize multiple projects.
-- **Task Tracking**: Manage tasks within projects with custom priority and status levels.
-- **Collaboration**: Add comments to tasks to keep track of progress and discussions.
-- **Secure Auth**: Modern authentication flow using JWT (JSON Web Tokens).
-- **Responsive Design**: Fully optimized for both desktop and mobile devices.
-- **Modern UI**: Polished aesthetic with glassmorphism and smooth transitions.
+### Relational Data Model
+The backend implements a multi-tier database schema designed for data integrity and scalability:
+- **Projects**: The root entity for grouping workstreams.
+- **Tasks**: Granular action items with strictly typed priority and status states.
+- **Comments**: Threaded feedback loop linked to tasks and users.
+- **Normalization**: Enforced through primary/foreign key constraints with `CASCADE` and `SET_NULL` logic to prevent orphaned records.
 
-## Tech Stack
+### REST API & Security
+The API is built on Django REST Framework, prioritizing security and clear contract definition:
+- **Stateless Auth**: Implements JWT (JSON Web Tokens) with a secure rotation strategy to manage user sessions without server-side state.
+- **Strict Permissions**: Custom `IsOwner` permission classes ensure users can only access or modify their own data.
+- **Input Validation**: Layered validation at both the serializer and model levels, with comprehensive error responses for the frontend.
 
-- **Backend**: Django, Django REST Framework, SimpleJWT.
-- **Frontend**: React (Vite), Axios, React Router.
-- **Database**: SQLite (Development) / PostgreSQL (Production ready).
-- **Styling**: Vanilla CSS with modern custom properties.
+### Frontend Implementation
+A modern React application built for speed and responsiveness:
+- **State Management**: Uses React Context API for reactive authentication and user session persistence.
+- **Component Architecture**: Modular design with reusable UI primitives (cards, modals, form inputs) to ensure consistency across the app.
+- **Responsive Systems**: CSS-grid and Flexbox-based layout that adapts fluidly from mobile breakpoints to wide-screen monitors.
+- **UX Details**: Built-in glassmorphism effects, smooth transitions, and real-time form validation for a premium feel.
 
-## Getting Started
+## Local Development
 
-### Backend Setup
+### Backend
+Requires Python 3.10+
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # venv\Scripts\activate on Windows
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
 
-1. Navigate to the `backend/` directory.
-2. Create a virtual environment: `python -m venv venv`.
-3. Activate it: `source venv/bin/activate` (Linux) or `venv\Scripts\activate` (Windows).
-4. Install dependencies: `pip install -r requirements.txt`. (Note: Ensure requirements.txt is present or install manually: django djangorestframework djangorestframework-simplejwt django-cors-headers dj-database-url whitenoise python-dotenv)
-5. Run migrations: `python manage.py migrate`.
-6. Start the server: `python manage.py runserver`.
+### Frontend
+Requires Node.js 18+
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-### Frontend Setup
-
-1. Navigate to the `frontend/` directory.
-2. Install dependencies: `npm install`.
-3. Start the dev server: `npm run dev`.
-
-## API Endpoints
-
-- `POST /api/auth/register/` - Register a new user
-- `POST /api/auth/login/` - Login and get JWT tokens
-- `GET /api/projects/` - List all projects for authenticated user
-- `POST /api/projects/` - Create a new project
-- `GET /api/projects/{id}/tasks/` - List all tasks for a project
-- `PATCH /api/tasks/{id}/` - Update task status, priority, or details
-- `POST /api/tasks/{id}/comments/` - Add a comment to a task
+## Key Endpoints
+- `/api/auth/register/` - User registration
+- `/api/auth/login/` - JWT token acquisition
+- `/api/projects/` - Project CRUD (GET/POST/DELETE)
+- `/api/projects/{id}/tasks/` - Task management within specific project context
+- `/api/tasks/{id}/comments/` - Interaction and feedback system
