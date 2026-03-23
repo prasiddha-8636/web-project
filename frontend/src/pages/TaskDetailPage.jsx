@@ -78,6 +78,16 @@ export default function TaskDetailPage() {
         }
     }
 
+    const updateProperty = async (name, value) => {
+        try {
+            const { data } = await api.patch(`/tasks/${id}/`, { [name]: value })
+            setTask(data)
+            setEditedTask(data)
+        } catch (err) {
+            alert('Failed to update task')
+        }
+    }
+
     if (loading) return (
         <div className="page-container">
             <Navbar />
@@ -202,7 +212,7 @@ export default function TaskDetailPage() {
                                 <select
                                     className="form-input mt-4"
                                     value={task.status}
-                                    onChange={e => handleUpdateTask({ preventDefault: () => { }, target: { value: e.target.value } }, api.patch(`/tasks/${id}/`, { status: e.target.value }).then(res => setTask(res.data)))}
+                                    onChange={e => updateProperty('status', e.target.value)}
                                 >
                                     <option value="todo">To Do</option>
                                     <option value="in_progress">In Progress</option>
@@ -215,7 +225,7 @@ export default function TaskDetailPage() {
                                 <select
                                     className="form-input mt-4"
                                     value={task.priority}
-                                    onChange={e => api.patch(`/tasks/${id}/`, { priority: e.target.value }).then(res => setTask(res.data))}
+                                    onChange={e => updateProperty('priority', e.target.value)}
                                 >
                                     <option value="low">Low</option>
                                     <option value="medium">Medium</option>
